@@ -4,7 +4,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import JSONResponse
 from fastapi.exceptions import RequestValidationError
 from starlette.exceptions import HTTPException as StarletteHTTPException
-
+from schemas import PostCreate, PostResponse
 
 
 
@@ -28,11 +28,30 @@ posts: list[dict] = [
         "date_posted": "April 21, 2025",
     },
 ]
-@app.get("/api/posts")
+@app.get("/api/posts",response_model=list[PostResponse])
 def get_posts():
     return posts
 
-@app.get("/post/{post_id}", include_in_schema=False)
+
+@app.post(
+    "/api/posts",
+    response_model=PostResponse,
+    status_code=status.HTTP_201_CREATED,
+)
+def create_post(post: PostCreate):
+    new_id = max(p["id"] for p in posts) + 1 if posts else 1
+    new_post = {
+        "id": new_id,
+        "author": post.author,
+        "title": post.title,
+        "content": post.content,
+        "date_posted": "April 23, 2025",
+    }
+    posts.append(new_post)
+    return new_post
+
+
+@app.get("/post/{post_id}", response_model=PostResponse)
 def post_page(request: Request, post_id: int):
     for post in posts:
         if post.get("id") == post_id:
