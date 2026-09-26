@@ -3,20 +3,10 @@ name = "fastapi-blog"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
-authors = [
-    { name = "CybeRShashank", email = "114229044+CybeRShashank@users.noreply.github.com" }
-]
-requires-python = ">=3.14"
+requires-python = ">=3.12"
 dependencies = [
     "aiosqlite>=0.22.1",
-    "fastapi[standar,standard]>=0.141.1",
-    "greenlet>=3.5.6",
-    "sqlalchemy>=2.0.54",
+    "fastapi[standard]>=0.128.0",
+    "greenlet>=3.3.0",
+    "sqlalchemy>=2.0.45",
 ]
-
-[project.scripts]
-fastapi-blog = "fastapi_blog:main"
-
-[build-system]
-requires = ["uv_build>=0.12.17,<0.13.0"]
-build-backend = "uv_build"
